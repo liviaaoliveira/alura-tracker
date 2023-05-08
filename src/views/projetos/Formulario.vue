@@ -23,7 +23,6 @@ import { useStore } from "@/store";
 import {
   ALTERA_PROJETO,
   ADICIONA_PROJETO,
-  NOTIFICAR,
 } from "@/store/tipo-mutacoes";
 import { defineComponent } from "vue";
 import useNotificador from "@/hooks/notificador";
