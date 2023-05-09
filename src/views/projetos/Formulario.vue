@@ -23,6 +23,7 @@ import { useStore } from "@/store";
 import { defineComponent, ref } from "vue";
 import useNotificador from "@/hooks/notificador";
 import { CADASTRAR_PROJETOS, ALTERAR_PROJETOS } from "@/store/tipo-acoes";
+import { useRouter } from "vue-router";
 export default defineComponent({
   name: "FormularioDivider",
   props: {
@@ -30,32 +31,8 @@ export default defineComponent({
       type: String,
     },
   },
-  methods: {
-    salvar() {
-      if (this.id) {
-        this.store
-          .dispatch(ALTERAR_PROJETOS, {
-            id: this.id,
-            nome: this.nomeDoProjeto,
-          })
-          .then(() => this.lidarComSucesso());
-      } else {
-        this.store
-          .dispatch(CADASTRAR_PROJETOS, this.nomeDoProjeto)
-          .then(() => this.lidarComSucesso());
-      }
-    },
-    lidarComSucesso() {
-      this.nomeDoProjeto = "";
-      this.notificar(
-        TipoNotificacao.SUCESSO,
-        "Excelente!",
-        "O projeto foi cadastrado com sucesso!"
-      );
-      this.$router.push("/projetos");
-    },
-  },
   setup(props) {
+    const router = useRouter();
     const store = useStore();
     const { notificar } = useNotificador();
     const nomeDoProjeto = ref("");
@@ -66,11 +43,32 @@ export default defineComponent({
       );
       nomeDoProjeto.value = projeto?.nome || "";
     }
-
+    const lidarComSucesso = () => {
+      nomeDoProjeto.value = "";
+      notificar(
+        TipoNotificacao.SUCESSO,
+        "Excelente!",
+        "O projeto foi cadastrado com sucesso!"
+      );
+      router.push("/projetos");
+    };
+    const salvar = () => {
+      if (props.id) {
+        store
+          .dispatch(ALTERAR_PROJETOS, {
+            id: props.id,
+            nome: nomeDoProjeto.value,
+          })
+          .then(() => lidarComSucesso());
+      } else {
+        store
+          .dispatch(CADASTRAR_PROJETOS, nomeDoProjeto.value)
+          .then(() => lidarComSucesso());
+      }
+    };
     return {
-      store,
-      notificar,
       nomeDoProjeto,
+      salvar,
     };
   },
 });
