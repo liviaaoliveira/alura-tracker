@@ -33,6 +33,13 @@ export default defineComponent({
       required: true,
     },
   },
+  computed: {
+    tempoGasto(): string {
+      return new Date(this.tarefa.duracaoEmSegundos * 1000)
+        .toISOString()
+        .substring(11, 8);
+    },
+  },
   methods: {
     tarefaClicada(): void {
       this.$emit("aoTarefaClicada", this.tarefaClicada);
