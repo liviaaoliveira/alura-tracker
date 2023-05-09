@@ -4,12 +4,12 @@
       <div
         class="column is-5"
         role="form"
-        aria-label="Formulario para criacao de uma nova tarefa"
+        aria-label="Formulário para criação de uma nova tarefa"
       >
         <input
           type="text"
           class="input"
-          placeholder="Qual tarefa voce deseja iniciar?"
+          placeholder="Qual tarefa você deseja iniciar?"
           v-model="descricao"
         />
       </div>
@@ -64,7 +64,7 @@ export default defineComponent({
   setup() {
     const store = useStore(key);
     return {
-      projetos: computed(() => store.state.projetos),
+      projetos: computed(() => store.state.projeto.projetos),
     };
   },
 });
