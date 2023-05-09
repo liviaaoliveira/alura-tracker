@@ -7,6 +7,14 @@
     {
       "id": 2,
       "nome": "ByteBank"
+    },
+    {
+      "nome": "Refatoracao do vuex",
+      "id": 3
+    },
+    {
+      "nome": "Configuracao do ambiente",
+      "id": 4
     }
   ],
   "tarefas": [
